@@ -1,0 +1,18 @@
+{{ $editor := "off"}}
+{{ if eq .Attributes.editor "basic" }}
+{{ $editor = "basic"}}
+{{ end }}
+
+<div>
+  <pre style="outline: none;" spellcheck="false"
+    id="id-{{crypto.SHA1 .Inner }}"><code data-lang="{{.Attributes.lang}}">{{- .Inner  }}</code></pre>
+</div>
+
+{{ $template := "" }}
+{{if .Attributes.template }}
+{{ $template = printf "#%s" .Attributes.template}}
+{{ end }}
+
+<codapi-snippet sandbox="{{.Attributes.lang}}" editor="{{$editor}}" selector="#id-{{crypto.SHA1 .Inner }}"
+  output-mode="{{.Attributes.output}}" template="{{$template}}"></codapi-snippet>
+{{ .Page.Store.Set "hasCodapi" true }}
