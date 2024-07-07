@@ -1,17 +1,21 @@
 {{ $editor := "off"}}
-{{ if eq .Attributes.editor "basic" }}
-{{ $editor = "basic"}}
+
+{{ if .Attributes.editor }}
+{{ $editor = .Attributes.editor }}
 {{ end }}
 
 <div>
-  <pre style="outline: none;" spellcheck="false"
-    id="id-{{crypto.SHA1 .Inner }}"><code data-lang="{{.Attributes.lang}}">{{- .Inner  }}</code></pre>
+  {{if not (eq $editor "off") }}
+  <pre style="outline: none; -webkit-user-modify: read-write-plaintext-only;" spellcheck="false"
+    id="id-{{crypto.SHA1 .Inner }}"><code class="language-{{.Attributes.lang}}" data-lang="{{.Attributes.lang}}">{{- .Inner  }}</code></pre>
+  {{ else }}
+  <pre style="outline: none" spellcheck="false"
+    id="id-{{crypto.SHA1 .Inner }}"><code class="language-{{.Attributes.lang}}" data-lang="{{.Attributes.lang}}">{{- .Inner  }}</code></pre>
+  {{ end }}
 </div>
 
-{{ $template := "" }}
-{{if .Attributes.template }}
-{{ $template = printf "#%s" .Attributes.template}}
-{{ end }}
+{{ $template := "" }} {{if .Attributes.template }} {{ $template = printf "#%s"
+.Attributes.template}} {{ end }}
 
 <codapi-snippet sandbox="{{.Attributes.lang}}" editor="{{$editor}}" selector="#id-{{crypto.SHA1 .Inner }}"
   output-mode="{{.Attributes.output}}" template="{{$template}}"></codapi-snippet>
