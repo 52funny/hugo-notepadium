@@ -14,8 +14,10 @@
   {{ end }}
 </div>
 
-{{ $template := "" }} {{if .Attributes.template }} {{ $template = printf "#%s"
-.Attributes.template}} {{ end }}
+{{ $template := "" }}
+{{if .Attributes.template }}
+{{ $template = printf "#%s" .Attributes.template }}
+{{ end }}
 
 <codapi-snippet sandbox="{{.Attributes.lang}}" editor="{{$editor}}" selector="#id-{{crypto.SHA1 .Inner }}"
   output-mode="{{.Attributes.output}}" template="{{$template}}"></codapi-snippet>
